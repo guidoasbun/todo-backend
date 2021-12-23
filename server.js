@@ -9,10 +9,11 @@ app.use(express.json());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.use("/api/users", require("./routes/api/users"));
+app.use("/api/v1/users", require("./routes/api/users"));
 
-app.listen({ port: 5000 }, async () => {
-  console.log("Server started on port 5000");
-  await sequelize.sync({ force: true });
-  console.log("Synced with database");
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, async () => {
+  console.log(`Server started on port ${PORT}`);
+  await sequelize.authenticate();
+  console.log("Connected with database");
 });
