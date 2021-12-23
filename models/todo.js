@@ -1,5 +1,7 @@
 "use strict";
+// const { STRING, BOOLEAN } = require("sequelize");
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**

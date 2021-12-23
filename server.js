@@ -11,7 +11,10 @@ app.use(express.json());
 app.get("/", (req, res) => res.send("Hello World!"));
 
 // Users routes
-app.use("/api/v1/users", require("./routes/api/users"));
+app.use("/api/v1/users", require("./routes/api/users-rt"));
+
+// Todos routes
+app.use("/api/v1/todos", require("./routes/api/todos-rt"));
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, async () => {
