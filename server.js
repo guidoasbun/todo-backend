@@ -7,8 +7,10 @@ const app = express();
 //Middleware
 app.use(express.json());
 
+// Test route
 app.get("/", (req, res) => res.send("Hello World!"));
 
+// Users routes
 app.use("/api/v1/users", require("./routes/api/users"));
 
 const PORT = process.env.PORT || 5001;

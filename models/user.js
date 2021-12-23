@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON(){
-      return { ...this.get(), id: undefined} // Hides the id from the response
+      return { ...this.get(), id: undefined, password: undefined} // Hides the id and password from the response
     }
 
   }
