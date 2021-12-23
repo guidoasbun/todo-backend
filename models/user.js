@@ -1,4 +1,5 @@
 "use strict";
+const { STRING } = require("sequelize");
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
@@ -14,14 +15,30 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      first_name: DataTypes.STRING,
-      last_name: DataTypes.STRING,
-      username: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
+      first_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      last_name: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
+      tableName: "users",
       modelName: "User",
     }
   );
