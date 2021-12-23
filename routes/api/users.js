@@ -32,6 +32,21 @@ router.get("/", async (req, res) => {
     console.log(e);
     res.status(500).send(e);
   }
-})
+});
+
+// GET
+// Find a user by id
+router.get("/:uuid", async (req, res) => {
+  const { uuid } = req.params;
+  try {
+    const user = await User.findOne({
+      where: { uuid },
+    });
+    return res.json(user);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
 
 module.exports = router;
