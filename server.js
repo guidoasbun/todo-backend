@@ -4,13 +4,13 @@ const { sequelize } = require("./models");
 
 const app = express();
 
-//Middleware
+// Middleware
 app.use(express.json());
 
 // Test route
 app.get("/", (req, res) => res.send("Hello World!"));
 
-// Users routes
+// User routes 
 app.use("/api/v1/users", require("./routes/api/users-rt"));
 
 // Todos routes

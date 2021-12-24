@@ -3,7 +3,7 @@ const router = exppress.Router();
 const { User, Todo } = require("../../models");
 
 // POST
-// Create a new user
+// Register a new user
 router.post("/", async (req, res) => {
   const { first_name, last_name, username, email, password } = req.body;
   try {
