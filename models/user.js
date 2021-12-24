@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(Todo, { foreignKey: "userId" });
     }
 
+    // Hides the id and password from the response
     toJSON() {
       return { ...this.get(), id: undefined, password: undefined }; // Hides the id and password from the response
     }

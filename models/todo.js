@@ -12,7 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate({ User }) {
       // define association here
       //
-      this.belongsTo(User, { foreignKey: "userId" });
+      this.belongsTo(User, { foreignKey: "userId", as: "user" });
+    }
+
+    // Hides the id and password from the response
+    toJSON() {
+      return { ...this.get(), id: undefined, userId: undefined }; // Hides the id and password from the response
     }
   }
   Todo.init(
