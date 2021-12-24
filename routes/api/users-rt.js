@@ -1,6 +1,6 @@
 const exppress = require("express");
 const router = exppress.Router();
-const { User } = require("../../models");
+const { User, Todo } = require("../../models");
 
 // POST
 // Create a new user
@@ -56,7 +56,11 @@ router.delete("/:uuid", async (req, res) => {
   const { uuid } = req.params;
   try {
     const user = await User.findOne({ where: { uuid } });
+    const todos = await Todo.findAll({ where: { userId: user.id } });
+    
     await user.destroy();
+    await todos.forEach((todo) => todo.destroy());
+    
     return res.json({ message: "User deleted" });
   } catch (e) {
     console.log(e);
