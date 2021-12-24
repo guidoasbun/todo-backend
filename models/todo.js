@@ -1,57 +1,49 @@
 "use strict";
-const { STRING } = require("sequelize");
+// const { STRING, BOOLEAN } = require("sequelize");
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Todo extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Todo }) {
+    static associate({ User }) {
       // define association here
-
-      this.hasMany(Todo, { foreignKey: "userId" });
+      //
+      this.belongsTo(User, { foreignKey: "userId", as: "user" });
     }
 
     // Hides the id and password from the response
     toJSON() {
-      return { ...this.get(), id: undefined, password: undefined }; // Hides the id and password from the response
+      return { ...this.get(), id: undefined, userId: undefined }; // Hides the id and password from the response
     }
   }
-  User.init(
+  Todo.init(
     {
       uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      first_name: {
+      task: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      last_name: {
+      completed: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      image: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
       },
     },
     {
       sequelize,
-      tableName: "users",
-      modelName: "User",
+      tableName: "todos",
+      modelName: "Todo",
     }
   );
-  return User;
+  return Todo;
 };
