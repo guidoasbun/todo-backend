@@ -29,14 +29,28 @@ module.exports = (sequelize, DataTypes) => {
       task: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Task is required" },
+          isLength(value) {
+            if (value.length < 2) {
+              throw new Error("A todo must have at least 2 characters");
+            }
+          },
+        },
       },
       completed: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Completed is required" },
+        }
       },
       image: {
         type: DataTypes.STRING,
         allowNull: true,
+        validate: {
+          isUrl: { msg: "Image must be a valid url" },
+        }
       },
     },
     {

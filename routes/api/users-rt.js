@@ -35,12 +35,13 @@ router.get("/", async (req, res) => {
 });
 
 // GET
-// Find a user by id
+// Find a user by id, and display all todos
 router.get("/:uuid", async (req, res) => {
   const { uuid } = req.params;
   try {
     const user = await User.findOne({
       where: { uuid },
+      include: "todos",
     });
     return res.json(user);
   } catch (e) {
@@ -48,5 +49,40 @@ router.get("/:uuid", async (req, res) => {
     res.status(500).send(e);
   }
 });
+
+// DELETE
+// Delete a user by id
+router.delete("/:uuid", async (req, res) => {
+  const { uuid } = req.params;
+  try {
+    const user = await User.findOne({ where: { uuid } });
+    await user.destroy();
+    return res.json({ message: "User deleted" });
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+});
+
+//UPDATE
+// Update a user by id
+router.put("/:uuid", async (req, res) => {
+  const uuid = req.params.uuid;
+  const { first_name, last_name, username, email, password } = req.body;
+  try {
+    const user = await User.findOne({ where: { uuid } });
+    await user.update({
+      first_name,
+      last_name,
+      username,
+      email,
+      password,
+    });
+    return res.json(user);
+  } catch (e) {
+    console.log(e);
+    res.status(500).send(e);
+  }
+})
 
 module.exports = router;
