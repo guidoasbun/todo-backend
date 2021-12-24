@@ -33,20 +33,34 @@ router.get("/", async (req, res) => {
   }
 });
 
+// DELETE
+// Delete a todo by id
+router.delete("/:uuid", async (req, res) => {
+  const { uuid } = req.params;
+  try {
+    const todo = await Todo.findOne({ where: { uuid } });
+    await todo.destroy();
+    return res.json({ message: "Todo deleted" });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json(e);
+  }
+});
+
 //UPDATE
 // Update a todo by id
 router.put("/:uuid", async (req, res) => {
-    const uuid = req.params.uuid;
-    const { task, completed, image } = req.body;
-    
-    try {
-        const todo = await Todo.findOne({ where: { uuid } });
-        await todo.update({ task, completed, image });
-        return res.json(todo);
-    } catch (e) {
-        console.log(e);
-        res.status(500).json(e);
-    }
-})
+  const uuid = req.params.uuid;
+  const { task, completed, image } = req.body;
+
+  try {
+    const todo = await Todo.findOne({ where: { uuid } });
+    await todo.update({ task, completed, image });
+    return res.json(todo);
+  } catch (e) {
+    console.log(e);
+    res.status(500).json(e);
+  }
+});
 
 module.exports = router;
